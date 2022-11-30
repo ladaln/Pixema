@@ -1,0 +1,20 @@
+@import "../../../../App/mixin";
+
+.navigation{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    height: 100%;
+    // height: calc(100vh - 216px);
+    &Content{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    & p{
+        @include DescriptionText;
+        color: #80858B;
+        text-align: center;
+    }
+}

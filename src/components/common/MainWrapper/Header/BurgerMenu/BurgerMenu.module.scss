@@ -1,0 +1,14 @@
+.burgerMenu{
+    display: none;
+    &Active{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        top: 60px;
+        background: #000000;
+        margin: 0 40px;
+        @media (min-width: 957px) {
+            display: none;
+        }
+    }
+}
