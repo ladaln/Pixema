@@ -1,17 +1,15 @@
+//TODO: проверка, чтоб пароли совпадали
+
+
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { routes } from '../../../App/AppRoutesAuth/AppRouterAuth';
 import styles from './SignUp.module.css';
-import {
-	getAuth,
-	createUserWithEmailAndPassword,
-	updateProfile,
-	sendEmailVerification,
-} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth';
 import { useAppDispatch } from '../../../../store/hook/hooks';
 import { setUser } from '../../../../store/reducer/userReducer';
-import ModalWindow, { ModalText } from '../ModalWindow/ModalWindow';
+import NotificationBase, { NotificationText } from '../NotificationBase/NotificationBase';
 import Input, { IInputData } from '../Input/Input';
 import { useState } from 'react';
 
@@ -23,81 +21,88 @@ const SignUp = () => {
 
 	const [isDisable, setIsDisable] = useState(false);
 	const [isDisableError, setIsDisableError] = useState(false);
-	const [textErrorState, setTexErrorState] = useState<ModalText>(ModalText.SUCCES_SIGN_IN);
+	const [textErrorState, setTexErrorState] = useState<NotificationText>(NotificationText.signed_up);
 
 	const getErrorText = (responseText: string) => {
 		if (responseText === 'auth/email-already-in-use') {
-			setTexErrorState(ModalText.ERROR_SIGN_UP);
+			setTexErrorState(NotificationText.error_signed_up);
 		}
 	};
-
 	const onSubmit: SubmitHandler<IInputData> = (data) => {
 		const auth = getAuth();
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then(({ user }) => {
 				updateProfile(user, {
 					displayName: data.name,
-					photoURL: 'https://abrakadabra.fun/uploads/posts/2022-02/thumbs/1644169591_2-abrakadabra-fun-p-avatarka-s-ulibkoi-3.png',
+					photoURL: '#',
 				})
 					.then(() => {
 						setIsDisable(true);
+						dispatch(setUser(user));
 						setTimeout(() => {
 							setIsDisable(false);
 							navigate(routes.SIGN_IN);
 						}, 3000);
 					})
+					.catch((error) => {
+						console.log(error)
+					});
+				/*	sendEmailVerification(user);// не работает*/
+
 			})
+
 			.catch((error) => {
 				setIsDisableError(true);
 				getErrorText(error.code);
 			});
+
 	};
 
 	return (
 		<>
 			{isDisable ? (
-				<ModalWindow message={ModalText.SUCCES_SIGN_UP} />
+				<NotificationBase message={NotificationText.signed_up} />
 			) : (
 				<form className={styles.formSignUp} onSubmit={handleSubmit(onSubmit)}>
-					<h2 className={styles.titleSignUp}>Sign Up</h2>
-					{isDisableError && <ModalWindow message={textErrorState} />}
+					<h2 className={styles.titleSignUp}>Регистрация</h2>
+					{isDisableError && <NotificationBase message={textErrorState} />}
 					<Input
 						keyData="name"
-						inputName="Name"
+						inputName="Имя"
 						inputType="text"
-						placeholder="Your Name"
+						placeholder="Ваше имя"
 						register={register}
 						required
 					/>
 					<Input
 						keyData="email"
-						inputName="Email"
+						inputName="Адрес электронной почты"
 						inputType="email"
-						placeholder="Your email"
+						placeholder="Ваш адрес эл.почты"
 						register={register}
 						required
 					/>
 					<Input
 						keyData="password"
-						inputName="Password"
+						inputName="Пароль"
 						inputType="password"
-						placeholder="Your pasword"
+						placeholder="Ваш пароль"
 						register={register}
 						required
 					/>
 					<Input
 						keyData="password_confirm"
-						inputName="Confirm password"
+						inputName="Подтвердите пароль"
 						inputType="password"
-						placeholder="Confirm password"
+						placeholder="Подтвердите пароль"
 						register={register}
 						required
 					/>
-					<button className={styles.buttonSignUp}>Sign up</button>
+					<button className={styles.buttonSignUp}>Зарегистрироваться</button>
 					<p className={styles.alreadyHaveAccount}>
-						Already have an account?{' '}
+						Уже есть аккаунт?{' '}
 						<Link className={styles.signInLink} to={routes.SIGN_IN}>
-							Sign In
+							Войти
 						</Link>
 					</p>
 				</form>
