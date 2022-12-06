@@ -1,16 +1,16 @@
-import React, {FC} from 'react';
-import Movie from "./Movie/Movie";
+import React, {FC, Suspense} from 'react';
 import {IMovie} from "../../../types/types";
+import Movie from './Movie/Movie';
+import styles from "./MoviesList.module.scss";
 
 interface MovieListProps {
     movies?: IMovie[]
-    query?: string,
 }
 
-const MoviesList: FC<MovieListProps> = ({movies = [], query = ""}) => {
+const MoviesList: FC<MovieListProps> = ({movies = []}) => {
 
     return (
-        <>
+        <div className={styles.movies}>
             {movies.map((movie, index) => {
                 return (
                     <Movie
@@ -20,7 +20,7 @@ const MoviesList: FC<MovieListProps> = ({movies = [], query = ""}) => {
                     />
                 );
             })}
-        </>
+        </div>
     );
 };
 

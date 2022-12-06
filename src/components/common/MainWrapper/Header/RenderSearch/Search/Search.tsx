@@ -1,19 +1,14 @@
-import React, { ChangeEventHandler, FC, FormEventHandler } from 'react';
-import filter from "../../../../../../assets/Search.svg"
+import React, { FC } from 'react';
+import filter from "../../../../../../assets/icons/Search.svg"
+import { ISearchProps } from '../../../../../../types/types';
 import styles from "./Search.module.scss"
-
-interface ISearchProps {
-    name?: string
-    value?: string,
-    onChange?: ChangeEventHandler<HTMLInputElement>,
-    onSubmit?: FormEventHandler<HTMLFormElement>,
-}
 
 const Search: FC<ISearchProps> = ({ 
     value = "",
     name = "", 
     onSubmit,
-    onChange, 
+    onChange,
+    onClick, 
 }) => {
     return (
         <form 
@@ -23,11 +18,11 @@ const Search: FC<ISearchProps> = ({
             <input 
                 name={name}
                 type="text" 
-                placeholder='Search'
+                placeholder='Поиск'
                 value={value}
                 onChange={onChange}
             />
-            <img src={filter} alt="Filter" />
+            <img src={filter} alt="Filter" onClick={onClick}/>
         </form>
     );
 };

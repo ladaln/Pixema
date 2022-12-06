@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { routes } from '../../../App/AppRoutesAuth/AppRouterAuth';
-import styles from './SignUp.module.css';
+import styles from './SignUp.module.scss';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth';
 import { useAppDispatch } from '../../../../store/hook/hooks';
 import { setUser } from '../../../../store/reducer/userReducer';
@@ -14,15 +14,25 @@ import { SignUpScheme } from './signUpValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-
-
 const SignUp = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const schema = yup.object().shape({
-		name: yup.string().required("Поле обязательное для заполнения"),
-		email: yup.string().email("Используйте существующий адрес эл.почты").required("Поле обязательное для заполнения"),
-		password: yup.string().min(4, "Пароль должен состоять минимум из 4х символов").max(20, "Пароль должен состоять максимум из 20 символов").required("Поле обязательное для заполнения"),
+		name: yup
+			.string()
+			.matches(/^[а-яА-ЯёЁa-zA-Z]+$/, "Имя пользователя должно состоять только из букв ")
+			.required("Поле обязательное для заполнения"),
+		email: yup
+			.string()
+			.email("Используйте существующий адрес эл.почты")
+			.required("Поле обязательное для заполнения"),
+		password: yup
+			.string()
+			.min(6, "Пароль должен состоять минимум из 6 символов")
+			.max(20, "Максимально допустимое количество символов")
+			.matches(/(?=.*[0-9])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{6,}/g,
+				"Пароль должен содержать хотя бы одну цифру и спецсимвол(!@#$%^&*)")
+			.required("Поле обязательное для заполнения"),
 		password_confirm: yup
 			.string()
 			.oneOf([yup.ref("password"), null], "Пароли не совпадают!")
@@ -34,6 +44,7 @@ const SignUp = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IInputData>({
+		mode: "onChange",
 		resolver: yupResolver(schema),
 	});
 
@@ -55,10 +66,10 @@ const SignUp = () => {
 				updateProfile(user, {
 					displayName: data.name,
 				})
-					.then(() => {
-						setIsDisable(true);
-						dispatch(setUser(user));
-						setTimeout(() => {
+				.then(() => {
+					setIsDisable(true);
+					dispatch(setUser(user));
+					setTimeout(() => {
 							setIsDisable(false);
 							navigate(routes.SIGN_IN);
 						}, 1000);
@@ -66,15 +77,14 @@ const SignUp = () => {
 					.catch((error) => {
 						console.log(error)
 					});
-				/*	sendEmailVerification(user);// не работает*/
-
+				// sendEmailVerification(user);// не работает*/
 			})
 
 			.catch((error) => {
 				setIsDisableError(true);
 				getErrorText(error.code);
 			});
-
+			
 	};
 
 	return (
@@ -129,7 +139,6 @@ const SignUp = () => {
 						</Link>
 					</p>
 				</form>
-
 			)}</>
 	);
 };

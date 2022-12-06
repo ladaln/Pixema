@@ -1,31 +1,68 @@
 .swiperWrapper {
+  display: flex;
+  flex-direction: row;
+  max-width: 1180px;
+  width: 100%;
+  overflow: hidden;
+  @media (min-width: 1800px) {
+    max-width: 1503px
+  }
+  @media (max-width: 1720px) {
+    max-width: 1195px;
+  }
+  @media (max-width: 1500px) {
+    max-width: 953px;
+  }
+  @media (max-width: 1277px) {
+    max-width: 690px;
+  }
+  @media (max-width: 1250px) {
+    max-width: 743px;
+  }
+  @media (max-width: 783px) {
+    max-width: 463px;
+  }
+  @media (max-width: 597px) {
+    margin: auto;
+  }
+  @media (max-width: 490px) {
+    max-width: 218px;
+  }
   :global(.swiper-wrapper) {
     display: flex;
+    position: relative;
+    gap: 40px;
     flex-wrap: nowrap;
   }
   :global(.swiper-slide) {
     max-width: 266px;
+    margin: 0 !important;
+    width: 100% !important;
+    @media (max-width: 1500px) {
+      max-width: 208px;
+    }
+    @media (max-width: 600px) {
+      max-width: 272px;
+    }
   }
-  overflow: hidden;
-  max-width: 800px;
 }
-
-.sliderDescription {
-  display: flex;
-  justify-content: space-between;
-  padding: 56px 0 40px;
-}
-
-.sliderTitle {
-  font-family: 'Exo 2';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 36px;
-  color: #FFFFFF;
-}
-
-.sliderButtons {
-  display: flex;
-  gap: 20px;
+.slider{
+  &Description {
+    min-width: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 40px;
+  }
+  &Title {
+    font-family: 'Exo 2';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: var(#{--text-color-default});
+  }
+  &Buttons {
+    display: flex;
+    gap: 20px;
+  }
 }

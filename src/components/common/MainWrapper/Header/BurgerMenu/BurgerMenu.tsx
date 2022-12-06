@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { IBurgerMenuСondition } from '../../../../../types/types';
-import RenderNavigation from '../../RenderNavigation/RenderNavigation';
+import { IBurgerMenuCondition } from '../../../../../types/types';
+import Navigation from '../../RenderNavigation/Navigation/Navigation';
 import styles from "./BurgerMenu.module.scss"
 
-const BurgerMenu: FC<IBurgerMenuСondition> = ({
+const BurgerMenu: FC<IBurgerMenuCondition> = ({
     menuActive = false,
     handleClickAway,
 }
@@ -15,8 +15,8 @@ const BurgerMenu: FC<IBurgerMenuСondition> = ({
         <div 
             className={handlerStylesBurgerMenu}
             onClick={handleClickAway}
-        >
-            <RenderNavigation/>
+        >   
+            <Navigation/>
         </div>
     );
 };

@@ -1,18 +1,13 @@
 import React, {createContext, FC, ReactNode, useContext, useEffect, useState} from 'react';
+import { ScreenWidthContext } from '../context/ScreenWidthContext';
 import { IWithChildren } from '../types/types';
-
-interface ScreenWidthValue {
-    screenWidth: number
-}
-
-const ScreenWidthContext = createContext<ScreenWidthValue | null>(null)
 
 const ScreenWidthProvider:FC<IWithChildren> = ({ children }) =>  {
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const callback = () => setScreenWidth(window.innerWidth)
 
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
 
     useEffect(() => {
         window.addEventListener("resize", callback)

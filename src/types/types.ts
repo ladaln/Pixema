@@ -1,7 +1,11 @@
-import { MouseEventHandler, ReactNode } from "react";
+import {ChangeEventHandler, FormEventHandler, MouseEventHandler, ReactNode, ReactSVGElement} from "react";
 
 export interface IWithChildren {
-    children: ReactNode,
+    children?: ReactNode,
+}
+
+export interface ScreenWidthValue {
+    screenWidth: number
 }
 
 export interface IMoviePoster {
@@ -25,7 +29,7 @@ interface IMoviePremiere {
 }
 
 interface IMovieFees {
-    usa: any;
+    usa: string;
     world: any;
 }
 
@@ -34,7 +38,7 @@ interface IMovieBudget {
     currency: string;
 }
 
-interface IMovieCountry {
+export interface IMovieCountry {
     name?: string;
 }
 
@@ -80,11 +84,11 @@ export interface IMovie {
     names?: IMovieName[];
     productionCompanies?: any[];
     persons?: IMoviePerson[];
-    ratingMpaa?: any;
+    ratingMpaa?: string;
     sequelsAndPrequels?: IMovie[];
     shortDescription?: string;
     similarMovies?: IMovieSimilar[];
-    slogan?: any;
+    slogan?: string;
     ticketsOnSale?: boolean;
     type?: string;
     typeNumber?: number;
@@ -93,29 +97,36 @@ export interface IMovie {
 }
 
 export interface IMovieAPIResponse {
-    docs: IMovie[];
+    docs: IMovie[]
+    secondDocs: IMovie[]
     limit?: number
     page?: number
     pages?: number
     total?: number
 }
 
-export interface IBurgerMenuСondition {
+export interface IBurgerMenuCondition {
     menuActive?: boolean;
     open?: boolean;
     handleClickAway?: MouseEventHandler;
     handleToggleBurgerMenu?: MouseEventHandler;
 }
 
+export interface ISearchFilterCondition {
+    condition?: boolean
+    onClick?: MouseEventHandler 
+}
+
 export interface INavTab {
-    id: number;
+    id?: number;
     title: string;
-    icon: any;
+    icon?: ReactNode;
 }
 
 export interface INavTabProps extends INavTab {
-    activeTabItem: number,
-    onClick: any,
+    onClick: MouseEventHandler,
+    className?: string;
+    activeTabItem?: number,
 }
 
 export interface ITabsProps {
@@ -124,3 +135,15 @@ export interface ITabsProps {
     onClick: any;
 }
 
+export interface INotFound {
+    text: string,
+    isLoading?: boolean,
+}
+
+export interface ISearchProps {
+    name?: string
+    value?: string,
+    onChange?: ChangeEventHandler<HTMLInputElement>,
+    onSubmit?: FormEventHandler<HTMLFormElement>,
+    onClick?: MouseEventHandler
+}
