@@ -3,7 +3,6 @@
 Pixema is a movie platform where you can get more information about your favorite movies. Users have the option to search by movie title, types, or release year. And also there is an opportunity to filter films by rating. Registered users have the opportunity to use more features.
 Site language: Russian
 
-*****************************
 
 ## Usage 🎥
 🔍 Search by:
@@ -26,7 +25,6 @@ Movie detail page have(poster, title, year of realease, produccer, and
 * choose dark / light theme
 * add or remove film from favorites list
 
-*********************
 
 ## Used technologies
 * React
@@ -44,7 +42,6 @@ Movie detail page have(poster, title, year of realease, produccer, and
 
 Front-end gets data from https://www.omdbapi.com/
  
- ***************
  
 ## Contacts 📬
 [Github](https://github.com/ladaln, "Github")
